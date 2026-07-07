@@ -1,0 +1,16 @@
+<Solution>
+    <Folder Name="/solutionItems/">
+        <File Path="CLAUDE.md" />
+        <File Path="README.md" />
+    </Folder>
+    <Folder Name="/src/">
+        <Project Path="src/Battlesnake.Domain/Battlesnake.Domain.csproj" />
+        <Project Path="src/Battlesnake.Application/Battlesnake.Application.csproj" />
+        <Project Path="src/Battlesnake.Infrastructure/Battlesnake.Infrastructure.csproj" />
+        <Project Path="src/Battlesnake.Api/Battlesnake.Api.csproj" />
+    </Folder>
+    <Folder Name="/tests/">
+        <Project Path="tests/Battlesnake.Domain.Tests/Battlesnake.Domain.Tests.csproj" />
+        <Project Path="tests/Battlesnake.Application.Tests/Battlesnake.Application.Tests.csproj" />
+    </Folder>
+</Solution>

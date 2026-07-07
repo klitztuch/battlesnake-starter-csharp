@@ -1,0 +1,371 @@
+@Starter_Api_HostAddress = http://localhost:5000
+
+### GET / - Battlesnake-Metadaten (Info-Request)
+GET {{Starter_Api_HostAddress}}/
+Accept: application/json
+
+### POST /start - Spielbeginn
+POST {{Starter_Api_HostAddress}}/start
+Content-Type: application/json
+
+{
+  "game": {
+    "id": "game-00fe20da-94ad-11ea-bb37",
+    "ruleset": {
+      "name": "standard",
+      "version": "v1.2.3",
+      "settings": {
+        "foodSpawnChance": 15,
+        "minimumFood": 1,
+        "hazardDamagePerTurn": 14,
+        "royale": {
+          "shrinkEveryNTurns": 25
+        },
+        "squad": {
+          "allowBodyCollisions": true,
+          "sharedElimination": true,
+          "sharedHealth": true,
+          "sharedLength": true
+        }
+      }
+    },
+    "map": "standard",
+    "timeout": 500,
+    "source": "league"
+  },
+  "turn": 0,
+  "board": {
+    "height": 11,
+    "width": 11,
+    "food": [
+      {
+        "x": 5,
+        "y": 5
+      },
+      {
+        "x": 9,
+        "y": 0
+      },
+      {
+        "x": 2,
+        "y": 6
+      }
+    ],
+    "hazards": [],
+    "snakes": [
+      {
+        "id": "snake-508e96ac-94ad-11ea-bb37",
+        "name": "My Snake",
+        "health": 100,
+        "body": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ],
+        "head": {
+          "x": 0,
+          "y": 0
+        },
+        "length": 3,
+        "latency": "0",
+        "shout": "",
+        "squad": "",
+        "customizations": {
+          "color": "#FF0000",
+          "head": "default",
+          "tail": "default"
+        }
+      }
+    ]
+  },
+  "you": {
+    "id": "snake-508e96ac-94ad-11ea-bb37",
+    "name": "My Snake",
+    "health": 100,
+    "body": [
+      {
+        "x": 0,
+        "y": 0
+      },
+      {
+        "x": 1,
+        "y": 0
+      },
+      {
+        "x": 2,
+        "y": 0
+      }
+    ],
+    "head": {
+      "x": 0,
+      "y": 0
+    },
+    "length": 3,
+    "latency": "0",
+    "shout": "",
+    "squad": "",
+    "customizations": {
+      "color": "#FF0000",
+      "head": "default",
+      "tail": "default"
+    }
+  }
+}
+
+### POST /move - Zug (wird jede Runde aufgerufen)
+POST {{Starter_Api_HostAddress}}/move
+Content-Type: application/json
+
+{
+  "game": {
+    "id": "game-00fe20da-94ad-11ea-bb37",
+    "ruleset": {
+      "name": "standard",
+      "version": "v1.2.3",
+      "settings": {
+        "foodSpawnChance": 15,
+        "minimumFood": 1,
+        "hazardDamagePerTurn": 14
+      }
+    },
+    "map": "standard",
+    "timeout": 500,
+    "source": "league"
+  },
+  "turn": 14,
+  "board": {
+    "height": 11,
+    "width": 11,
+    "food": [
+      {
+        "x": 5,
+        "y": 5
+      },
+      {
+        "x": 9,
+        "y": 0
+      },
+      {
+        "x": 2,
+        "y": 6
+      }
+    ],
+    "hazards": [
+      {
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "snakes": [
+      {
+        "id": "snake-508e96ac-94ad-11ea-bb37",
+        "name": "My Snake",
+        "health": 54,
+        "body": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ],
+        "head": {
+          "x": 0,
+          "y": 0
+        },
+        "length": 3,
+        "latency": "111",
+        "shout": "why are we shouting??",
+        "squad": "",
+        "customizations": {
+          "color": "#FF0000",
+          "head": "pixel",
+          "tail": "pixel"
+        }
+      },
+      {
+        "id": "snake-b67f4906-94ae-11ea-bb37",
+        "name": "Another Snake",
+        "health": 16,
+        "body": [
+          {
+            "x": 5,
+            "y": 4
+          },
+          {
+            "x": 5,
+            "y": 3
+          },
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 6,
+            "y": 2
+          }
+        ],
+        "head": {
+          "x": 5,
+          "y": 4
+        },
+        "length": 4,
+        "latency": "222",
+        "shout": "I'm not really sure...",
+        "squad": "",
+        "customizations": {
+          "color": "#26CF04",
+          "head": "silly",
+          "tail": "curled"
+        }
+      }
+    ]
+  },
+  "you": {
+    "id": "snake-508e96ac-94ad-11ea-bb37",
+    "name": "My Snake",
+    "health": 54,
+    "body": [
+      {
+        "x": 0,
+        "y": 0
+      },
+      {
+        "x": 1,
+        "y": 0
+      },
+      {
+        "x": 2,
+        "y": 0
+      }
+    ],
+    "head": {
+      "x": 0,
+      "y": 0
+    },
+    "length": 3,
+    "latency": "111",
+    "shout": "why are we shouting??",
+    "squad": "",
+    "customizations": {
+      "color": "#FF0000",
+      "head": "pixel",
+      "tail": "pixel"
+    }
+  }
+}
+
+### POST /end - Spielende
+POST {{Starter_Api_HostAddress}}/end
+Content-Type: application/json
+
+{
+  "game": {
+    "id": "game-00fe20da-94ad-11ea-bb37",
+    "ruleset": {
+      "name": "standard",
+      "version": "v1.2.3",
+      "settings": {
+        "foodSpawnChance": 15,
+        "minimumFood": 1,
+        "hazardDamagePerTurn": 14
+      }
+    },
+    "map": "standard",
+    "timeout": 500,
+    "source": "league"
+  },
+  "turn": 162,
+  "board": {
+    "height": 11,
+    "width": 11,
+    "food": [
+      {
+        "x": 5,
+        "y": 5
+      }
+    ],
+    "hazards": [],
+    "snakes": [
+      {
+        "id": "snake-508e96ac-94ad-11ea-bb37",
+        "name": "My Snake",
+        "health": 82,
+        "body": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ],
+        "head": {
+          "x": 0,
+          "y": 0
+        },
+        "length": 3,
+        "latency": "111",
+        "shout": "I won!",
+        "squad": "",
+        "customizations": {
+          "color": "#FF0000",
+          "head": "default",
+          "tail": "default"
+        }
+      }
+    ]
+  },
+  "you": {
+    "id": "snake-508e96ac-94ad-11ea-bb37",
+    "name": "My Snake",
+    "health": 82,
+    "body": [
+      {
+        "x": 0,
+        "y": 0
+      },
+      {
+        "x": 1,
+        "y": 0
+      },
+      {
+        "x": 2,
+        "y": 0
+      }
+    ],
+    "head": {
+      "x": 0,
+      "y": 0
+    },
+    "length": 3,
+    "latency": "111",
+    "shout": "I won!",
+    "squad": "",
+    "customizations": {
+      "color": "#FF0000",
+      "head": "default",
+      "tail": "default"
+    }
+  }
+}
