@@ -1,43 +1,56 @@
 # [Battlesnake](https://play.battlesnake.com) C# Starter
 
-This is a basic implementation of the Battlesnake API. It's a great starting point for anyone wanting to program their first Battlesnake using C#. 
-It can also be deployed to Azure, or any other cloud provider you'd like.
+A Clean Architecture starter for [Battlesnake](https://play.battlesnake.com) written in C#, targeting **.NET 10**. Forked from [neistow/battlesnake-starter-csharp](https://github.com/neistow/battlesnake-starter-csharp).
 
-### Technologies Used
+## Technologies
 
-* [Asp Net Core](https://dotnet.microsoft.com/apps/aspnet)
+- [ASP.NET Core](https://dotnet.microsoft.com/apps/aspnet) (Minimal API)
+- .NET 10
+- xUnit
 
 ## Prerequisites
 
-* [Battlesnake Account](https://play.battlesnake.com)
-* [Azure Account](https://azure.microsoft.com/en-us/)
-* [GitHub Account](https://github.com) (Optional)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
+- [Battlesnake Account](https://play.battlesnake.com)
+- [Azure Account](https://azure.microsoft.com/en-us/) (for deployment)
 
-## Running Your Battlesnake on [Azure](https://azure.microsoft.com/en-us/)
+## Architecture
 
-For a quick setup you'll need a [Rider](https://www.jetbrains.com/rider/) or [Visual Studio](https://visualstudio.microsoft.com/)
+Clean Architecture with four projects. Dependencies point inward only:
 
-1. Clone this repository and open it in any mentioned IDE
 ```
-https://github.com/neistow/battlesnake-starter-csharp.git
+Battlesnake.Api  ──►  Battlesnake.Application  ──►  Battlesnake.Domain
+     │                        ▲                            ▲
+     └──►  Battlesnake.Infrastructure  ────────────────────┘
 ```
-### Rider 
-2. You should install [Azure Toolkit](https://plugins.jetbrains.com/plugin/11220-azure-toolkit-for-rider).
-3. Right click on Battlesnake.Api and select "Publish" → "Publish to Azure".
-![rider64_dHp9DKUBkh](https://user-images.githubusercontent.com/55974615/84885040-270ffc80-b09b-11ea-8984-05bde8edf0b5.png)
-![rider64_FcBaZNPtVG](https://user-images.githubusercontent.com/55974615/84885122-427b0780-b09b-11ea-9e3f-72290e2581a4.png)
-4. Choose subscription type,location of server etc. If you have login error go to "Tools" → "Azure" and login to your account
-![rider64_SB5qMCBKTM](https://user-images.githubusercontent.com/55974615/84885239-6d655b80-b09b-11ea-8488-693e393f2050.png)
-5. Click Publish and wait until a link to your app appears in console and/or opens in browser. At this point you've deployed your snake.
-![rider64_1xs3suV3aB](https://user-images.githubusercontent.com/55974615/84885652-ff6d6400-b09b-11ea-88c6-72ed996c5554.png)
-6. If you need to update your snake simply click "publish" and select existing app, after confirmation your snake will be updated and deployed automatically.
 
-### Visual Studio
-2. Right click on Battlesnake.Api and select "Publish" → "App Service" → "Create New".
-![nXystE79yb](https://user-images.githubusercontent.com/55974615/84887198-144af700-b09e-11ea-80b8-b69ea9bb2eb9.png)
-3. Choose subscription type,location of server etc.
-![devenv_jU0squqFWl](https://user-images.githubusercontent.com/55974615/84887068-ea91d000-b09d-11ea-8da4-6224543516f9.png)
-4. Click Publish and wait until a link to your app appears in console and/or opens in browser. At this point you've deployed your snake.
-![devenv_jK3BxfPRi3](https://user-images.githubusercontent.com/55974615/84887103-f54c6500-b09d-11ea-8fb7-254f041e95f6.png)
-5. If you need to update your snake simply click "publish" and select existing app, after confirmation your snake will be updated and deployed automatically.
+- **`Battlesnake.Domain`** — pure entities/value objects and enums; no external dependencies. The snake AI lives here: `Strategies/IMoveStrategy` + implementations. `SafeRandomMoveStrategy` (avoids walls and own body) is the registered default; `RandomMoveStrategy` is a purely random baseline.
+- **`Battlesnake.Application`** — orchestration layer. `ISnakeService`/`SnakeService` handle the four lifecycle events. `SnakeOptions` holds the configurable appearance.
+- **`Battlesnake.Infrastructure`** — adapters: `InMemoryGameStore` and `SnakeOptions` binding from `appsettings.json`.
+- **`Battlesnake.Api`** — ASP.NET Core Minimal API and composition root. Maps the four Battlesnake endpoints.
 
+## Running Locally
+
+```bash
+dotnet build                              # build the solution
+dotnet test                               # run all unit tests
+dotnet run --project src/Battlesnake.Api  # start the server (http://localhost:5000)
+```
+
+## Customising Your Snake
+
+Edit `src/Battlesnake.Api/appsettings.json` to change the appearance:
+
+```json
+"Snake": {
+  "color": "#888888",
+  "head": "bee",
+  "tail": "bee"
+}
+```
+
+To change move behaviour, implement `IMoveStrategy` in `Battlesnake.Domain/Strategies/` and swap the registration in `src/Battlesnake.Domain/DependencyInjection.cs`.
+
+## Deployment
+
+The server exposes a plain HTTP API, so it can be hosted anywhere — Azure App Service, Fly.io, Railway, a VPS, or any other cloud provider. Publish the `Battlesnake.Api` project and point your Battlesnake to the resulting URL.
